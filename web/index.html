@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html>
+<head><style type="text/css">.lw { font-size: 60px; }</style>
+
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="http://getbootstrap.com/dist/js/bootstrap.js"></script>
+<link type="text/css" rel="stylesheet" href="http://getbootstrap.com/dist/css/bootstrap.css">
+<title>HTML5, CSS3 and JavaScript demo</title>
+<link type="text/css" rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- Start your code here -->
+
+<div class="row">
+  <div class="col-lg-2">
+    <div class="panel">
+      <fieldset>
+        <legend>Option Buttons</legend>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked=""> Option one
+          </label>
+          <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" checked=""> Option two
+          </label>          
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="col-lg-2">
+    <div class="panel">
+      <fieldset id="listFieldset">
+        <legend>Lists</legend>
+          <ul class="list-group">
+          <li class="list-group-item list-group-item-success">First item</li>
+          <li class="list-group-item list-group-item-info">Second item</li>
+          <li class="list-group-item list-group-item-warning">Third item</li>
+          <li class="list-group-item list-group-item-danger">Fourth item</li>
+          </ul>
+      
+      </fieldset>
+    </div>
+  </div>  
+  <div class="col-lg-2">
+    <div class="panel">
+      <fieldset>
+        <legend>Form</legend>
+        <div class="form-group">
+          <label for="exampleInputlDisabled">
+            Name: </label>
+          <input type="text" disabled="disabled" class="form-control" id="exampleInputlDisabled" placeholder="Enter name" name="username" value="groot">            
+          <label for="exampleInputEmail">
+            Email address</label>
+          <input type="text" class="form-control" id="exampleInputEmail" placeholder="Enter email">
+          <label for="exampleInputEmailConfirm">
+            Confirm Email address</label>
+          <input type="text" class="form-control" id="exampleInputEmailConfirm" placeholder="Enter email">		  
+          <label for="exampleInputEmailDisabled">
+            Old email: </label>
+          <input type="text" readonly="readonly" class="form-control" id="exampleInputEmailDisabled" placeholder="Enter email" value="old@email.com">          
+          
+          <select class="form-control">
+            <option value="one">One</option>
+            <option value="two">Two</option>
+            <option value="three">Three</option>
+            <option value="four">Four</option>
+            <option value="five">Five</option>
+        </select>
+          <a class="btn btn-default" href="#" role="button" id="linkBtn">Click me</a>
+          <button class="btn btn-default" type="submit" id="submitBtn">Button</button>
+          <div class="alert alert-info" id="infoDiv" role="alert" style="display:none;"></div>
+          <div class="alert alert-warning" id="warnDiv" role="alert" style="display:none;"></div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+    <div class="col-lg-2" id="visibleColumn">
+    <div class="panel">
+      <fieldset>
+        <legend>Visible column</legend>
+      </fieldset>
+    </div>
+  </div>
+    <div class="col-lg-2" id="invisibleColumn" style="display: none;">
+    <div class="panel">
+      <fieldset>
+        <legend>Inisible column</legend>
+      </fieldset>
+    </div>
+  </div>
+    <div class="col-lg-2" id="hiddenColumn" style="visibility: hidden;">
+    <div class="panel">
+      <fieldset>
+        <legend>Hidden column</legend>
+      </fieldset>
+    </div>
+  </div>  
+</div>
+
+<!-- End your code here -->
+<script type="text/javascript" src="js/script.js"></script>
+
+<script>// Write JavaScript here 
+$('#submitBtn').click(function() {
+  $('#infoDiv').text("Button was clicked");
+  $('#infoDiv').toggle();
+  return false;
+});
+
+$('#linkBtn').click(function() {
+  $('#warnDiv').text("Link was clicked");
+  $('#warnDiv').toggle(1000);
+  return false;
+});</script></body>
