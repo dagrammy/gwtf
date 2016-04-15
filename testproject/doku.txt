@@ -1,0 +1,167 @@
+What is it?
+
+Prerequisites
+Install CasperJS (http://casperjs.readthedocs.org/en/latest/installation.html) and also follow the prerequisites of casperjs (PhantomJS and Python)
+
+Installation
+Just unzip the zip file to a directory.
+
+Try it
+Use runtest.bat/.sh to run a test or from console: java -classpath xwtt.jar;lib\* xwtt.Xwtt
+
+Following argument are availabel, but just the -f option is requiredn.
+
+usage: groovy
+ -f,--groovyfile <arg>     path to the groovy testfile
+ -c,--casperjspath <arg>   Path to the binary directory of CasperJS. If casperjs is not in der your PATH, you have to specifiy the casperjs installation directory.
+ -j,--jsscriptdir <arg>    Directory in which the generated CasperJS js files will be saved. Specify a directory if you don't want to use the default "scripts_js" directory.
+ -o,--scriptonly           Just generate the casperhs javascript files
+ -s,--suite                run a test suite script
+ -t,--testresults          create xUnit test results files (default: false)
+ -td,--testdir <arg>       directory to store the xUnit test results files
+ -tn,--testname <arg>      name of the test run
+ -u,--url <arg>            start URL
+ -h,--help                 Help - Usage Information
+
+
+Use it
+1.) create a new .groovy file in the directory called "tests" or copy _skeleton.groovy and open the file
+2.) specifiy some general attributes
+3.) add test steps
+4.) run it
+
+Global parameters:
+
+
+The following test steps are available at the moment. Inspect the snippets directory to see whats behind each step.
+
+exists("#cssSelector"): check if an element with the given css selector exists
+existsXpath("xpath"): check if an element with the given xpath expression exists
+doesntExist("#cssSelector"): check if an element with the given css selector does not exist
+doesntExistXpath("xpath"): check if an element with the given xpath expression does not exist
+resourceExists("resource"): check if the resource (e.g. an image) exist
+screenshot(): takes an screenshot of the current rendered page
+isEnabled("#cssSelector"):
+isDisabled("#cssSelector"):
+isReadOnly("#cssSelector"):
+isNotReadOnly("#cssSelector"):
+isVisible("#cssSelector"): check if an element is visible [synonym: assertVisible]
+isVisibleXpath("xpath"): [synonym: assertVisibleXpath]
+isNotVisible("#cssSelector"): check if an element is not visible [synonym: assertNotVisible]
+isNotVisibleXpath("xpath"): [synonym: assertNotVisibleXpath]
+elementCount("#cssSelector", "count"): [synonym: assertElementCount]
+elementCountXpath(("xpath", "count"): [synonym: assertElementCountXpath]
+log("some text"): log some text
+fieldHasValue("name of field", "value"): checks if the field with the given name (name attribute) has the given value [synonym: assertField]
+fieldByCssHasValue("#cssSelector", "value"): checks if the field of the given css selector has the given value [synonym: assertFieldCss]
+fieldByXpathHasValue("xpath", "value"): checks if the field with the given xpath expression has the given value  [synonym: assertFieldXpath]
+
+
+sendKeys("#cssSelector", "keys"): fills value into the field with given css selector using the casper js "sendKeys" function  [synonym: sendKeysToSelector]
+sendKey("key"):
+sendKeyToSelector("#cssSelector", "key"):
+sendKeyToSelectorXpath("xpath", "keys"):
+sendKeysToSelectorXpath("xpath", "keys"):
+
+fillField("#cssSelector", "value"): fills value into the field with given css selector  [synonym: setValue]
+fillFormFields("formName", [map of fields and values], submitForm[true/false]):
+fillFormFieldCss("formName", "#cssSelector", "value", submitForm[true/false]) [synonym: fillFormFieldSelectors]
+fillFormFieldsCss("formName", [map of cssSelector and values], submitForm[true/false])  [synonym: fillFormFieldsSelectors]
+fillFormFieldXpath("formName", "xpath", "value", submitForm[true/false])
+fillFormFieldsXpath("formName", [map of xpath expressions and values], submitForm[true/false])
+
+declareVar("variableName", "formName", "name of field"):
+
+
+click("#cssSelector"): clicks the element with the given css selector
+clickXpath("xpath"): clicks the element with the given xpath expression
+clickHyperlinkWithText("text"): clicks a link with the given text
+doubleClick("#cssSelector"): 
+doubleClickXpath("xpath"):
+rightClick("#cssSelector"):
+rightClickXpath("xpath"):
+
+check("formName", "name of field")
+checkSelector("formName", "#cssSelector")
+checkXpath("formName", "xpath")
+uncheck("formName", "name of field")
+uncheckSelector("formName", "#cssSelector")
+uncheckXpath("formName", "xpath")
+
+select
+selectCss [synonym: selectSelector]
+selectXpath
+selectIndex [synonym: selectByIndex]
+selectByValue
+
+assertOptionCount
+
+hasText("#cssSelector", "the text"): checks if a the element given css selector contains the given text
+hasTextXpath("xpath", "the text"):
+doesntHaveText("#cssSelector", "the text"):
+doesntHaveTextXpath("xpath", "the text"):
+textExists("the text"):
+
+
+eval("script"): 
+evalEquals("script", "value"):
+evaluateJs"script"): 
+
+
+fieldHasValueOfVar("name", "variableName"): 
+fieldByCssHasValueOfVar("#cssSelector", "variableName"): 
+fieldByXpathHasValueOfVar("xpath", "variableName"): 
+back:
+forward:
+
+log:
+info:
+addMessageToTestresult:
+
+login:
+
+include:
+
+
+
+
+Include steps from another test.
+
+
+Entensions:
+You can easily extend the features by writing your own extensions. Lets assume you have a common type of presenting error messages (like a div with the id "errorContainer" and a span "errorMessage") and you want to check if an error has occured or not. Also if an error has occured you want to be able to check the error message.
+Add files named "hasError.js" and "hasNoError.js" to the directory called extensions.
+
+hasNoError.js:
+casper.then(function(){
+	 test.assertNotVisible("#errorContainer");
+});  
+
+hasError.js
+casper.then(function(){
+	test.assertVisible("#errorContainer");
+	<% if (errorMessage){ %>
+		test.assertSelectorHasText($selector, '$errorMessage');
+	<% } %>
+});  
+
+After you have created these extension you can use them in test steps.
+- hasNoError()
+- hasError()
+- hasError([errorMessage: "ErrorCode 42: User not found"])
+
+Testsuites:
+Its also possible to bundle multiple tests. Youd do so by creating a *.groovy file in the suites folder and referencing tests.
+suite = {
+	name = "MyApp Jenkins Testsuite"
+	tests = [
+		"myapp_main", // would be myapp_main.groovy in the tests folder
+		"myapp_create",
+		"myapp_delete"
+	]
+}
+
+Start the whole suite by specifiying the -s option.  java -classpath xwtt.jar;lib\* xwtt.Xwtt -s -f mysuite.groovy
+
+
+Jenkins integration
