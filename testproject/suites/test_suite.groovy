@@ -1,0 +1,9 @@
+
+suite = {
+	
+	name = "Testsuite"
+	
+	tests = [
+	]
+	
+}
