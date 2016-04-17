@@ -1,38 +1,30 @@
 package org.gwtf
 
 
+import org.apache.log4j.FileAppender;
 import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.log4j.Logger
+import org.apache.log4j.PatternLayout;;
 
 class ScriptRunner{
 	
 	private static final Logger logger = LogManager.getLogger(ScriptRunner.class)
 	
 	def runScript(String casperPath, String jsFile, String testName, String testDir, boolean createTestResultFiles){
-		
 		// TODO:
 		// copy js to test result
-		
-		if (testName == null){
-			def file = new File(jsFile)
-			testName = file.name.substring(0, file.name.lastIndexOf('.'))  
-			testName += "_" + new Date().format("yyyyMMdd_HHmmss")
-		}
-		
 		def cmdString = "cmd /c "
 		if (casperPath) cmdString = cmdString + casperPath + File.separator 
-		cmdString = cmdString + "casperjs test "
+		cmdString = cmdString + "casperjs"
 		
+		cmdString = cmdString +" --verbose --curDir='"+ testDir +"\\testresults\\"+ testName + "'"
+
 		if (createTestResultFiles){
-			cmdString = cmdString + "--xunit='"+ testDir +"\\testresults\\"+ testName +"\\test.xml' "
+			cmdString = cmdString + " --xunit='"+ testDir +"\\testresults\\"+ testName +"\\test.xml'"
 		}
 		
-		cmdString = cmdString + jsFile
-		
-		if (createTestResultFiles){
-			cmdString = cmdString +" --curDir='"+ testDir +"\\testresults\\"+ testName + "'"
-		}
-		 
+		cmdString = cmdString + " test '" + jsFile + "'"
+				 
 		logger.info(cmdString)
 		
 		def proc = cmdString.execute()
@@ -45,6 +37,7 @@ class ScriptRunner{
 		if (proc.exitValue()) {
 			logger.fatal(proc.getErrorStream())
 		}
+		
 	}
 	
 }

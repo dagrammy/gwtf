@@ -41,7 +41,7 @@
               <outputDirectory>${project.build.directory}</outputDirectory>
               <resources>          
                 <resource>
-                  <directory>testproject</directory>
+                  <directory>examples</directory>
                    <includes>
                 		<include>run.bat</include>
 <!--                 		<include>log4jconfig.groovy</include> -->
