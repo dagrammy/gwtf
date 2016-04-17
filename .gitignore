@@ -14,3 +14,7 @@ hs_err_pid*
 /bin/
 /target/
 
+/.README.md.html
+testresults
+scripts_js
+.groovy

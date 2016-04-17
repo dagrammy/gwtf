@@ -14,7 +14,9 @@ class ScriptRunner{
 		// copy js to test result
 		
 		if (testName == null){
-			testName = new Date().format("yyyyMMdd_HHmmss")
+			def file = new File(jsFile)
+			testName = file.name.substring(0, file.name.lastIndexOf('.'))  
+			testName += "_" + new Date().format("yyyyMMdd_HHmmss")
 		}
 		
 		def cmdString = "cmd /c "

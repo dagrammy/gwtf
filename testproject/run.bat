@@ -1,0 +1,1 @@
+java -cp lib\*;gwtf.jar org.gwtf.Gwtf %*

@@ -1,8 +1,12 @@
 package org.gwtf;
 
-import java.util.Map;
+import java.util.Map
+
+import org.apache.commons.io.Charsets;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+
 
 // this.clickLabel('Anchor_Text','a')
 
@@ -44,11 +48,15 @@ class BindingCreator {
 		def binding = new Binding()
 		
 		def snippets = [:]
-		File snippetsDir = new File("snippets")
+		def files = ['addMessageToTestresult', 'back', 'click', 'declareVar', 'doesntExist', 'doesntHaveText', 'elementCount', 'eval', 'evalEquals', 'evaluate', 'exists', 'fieldHasValue', 'fill', 'forward', 'hasText', 'info', 'isNotVisible', 'isVisible', 'log', 'login', 'resourceExists', 'screenshot', 'sendKeys', 'storeFormValue', 'textExists']
 		
-		snippetsDir.listFiles({d, f-> f.endsWith(".js")} as FilenameFilter).each {
-			snippets[it.name] = Util.getSnippet(it.name)
+		files.each {
+			snippets[it + ".js"] = Util.getSnippet(it + ".js")
 		}
+		
+//		snippetsDir.listFiles({d, f-> f.endsWith(".js")} as FilenameFilter).each {
+//			snippets[it.name] = Util.getSnippet(it.name)
+//		}
 
 		// evals
 		binding.eval = { x ->

@@ -24,6 +24,10 @@ class TemplateCreator{
 		def shell = new GroovyShell(binding, cconf)
 		
 		def groovyScriptFile = new File(testFile)
+		if (!groovyScriptFile.exists()){
+			logger.error("could not find groovyScriptFile")
+			System.exit(0)
+		}
 		def script = groovyScriptFile.getText('UTF-8')
 		def evaluatedScript = shell.evaluate(script)
 		
@@ -33,6 +37,14 @@ class TemplateCreator{
 		if (!template) template = "defaultTemplate.js"
 		
 		def bodyTemplateTmpl = Util.getTemplate(template)
+		if (bodyTemplateTmpl == null){
+			println "try custom template at " + groovyScriptFile.parentFile.parent + File.separator +"templates" + File.separator + template
+			bodyTemplateTmpl = Util.getCustomTemplate(groovyScriptFile.parentFile.parent + File.separator +"templates" + File.separator + template)
+			if (!bodyTemplateTmpl){
+				logger.error("could not find template")
+				System.exit(0)
+			}
+		}
 		
 		def complete = ''
 		test.steps.each {it ->

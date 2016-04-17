@@ -11,7 +11,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import groovy.util.logging.*
 
-def config = new ConfigSlurper().parse(new File('log4jconfig.groovy').toURL())
+def config = new ConfigSlurper().parse(this.class.getResource('/resources/log4jconfig.groovy'))
 PropertyConfigurator.configure(config.toProperties())
 
 def final Logger logger = LogManager.getLogger(this.class)
@@ -42,12 +42,18 @@ if (options.h){
 }
 
 
+def testFile = new File(options.f)
+if (!testFile.exists()) {
+	println "could not fine test file '${options.f}'"
+	 System.exit(0)
+}
+
 def currentDir = new File("").absolutePath
 def url = null
-def jsPath = currentDir + File.separator + "scripts_js"
+def jsPath = testFile.parentFile.parent + File.separator + "scripts_js"
 def casperPath = ""
 def testName = null
-def testDir = currentDir
+def testDir = testFile.parentFile.parent
 
 if (options.j) jsPath =  options.j
 if (options.u) url =  options.u
